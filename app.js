@@ -43,7 +43,7 @@ const getFiles = (folderName) => {
             path: filePath + '/' + el
         }
     })
-    const imgs = files.filter(el => el.includes('.jpg', '.png', '.jpeg')).map(el => {
+    const imgs = files.filter(el => el.endsWith('.jpg') || el.endsWith('.png') || el.endsWith('jpeg')).map(el => {
         const filePathLen = folderName.split('/')
         const filePath = filePathLen.slice(1, filePathLen.length).join('/')
         return {
@@ -79,8 +79,8 @@ app.post('/', (req, res) => {
 app.post('/create-folder', (req, res) => {
     const {path, name} = req.body
     const dir = path + '/' + name;
-    if (!fs.existsSync(dir)){    //check if folder already exists
-        fs.mkdirSync(dir);    //creating folder
+    if (!fs.existsSync(dir)) {  
+        fs.mkdirSync(dir);   
     }
     res.status(200).json({
         status: 'success'
